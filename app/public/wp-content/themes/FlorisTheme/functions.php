@@ -24,8 +24,6 @@ function loadCss()
 }
 add_action('wp_enqueue_scripts', 'loadCss');
 
-// --- FlorisTheme additions ---
-
 // FlorisTheme - functions.php (added menu and sidebar registration)
 if ( ! function_exists( 'floris_setup' ) ) {
     function floris_setup() {

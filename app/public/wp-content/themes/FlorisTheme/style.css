@@ -2909,3 +2909,31 @@ body {
     text-align: center;
     padding: 1em;
 }
+
+
+/* Week 2 styling improvements */
+.entry-title a {
+    color: #2e7d32;
+    text-decoration: none;
+}
+.entry-title a:hover {
+    text-decoration: underline;
+}
+article {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.widget {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.posts-navigation {
+    text-align: center;
+    margin: 20px 0;
+}
+.site-navigation ul {
+    justify-content: center;
+}
