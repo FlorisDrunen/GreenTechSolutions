@@ -1,0 +1,2335 @@
+
+/* ===== main.scss ===== */
+// Breakpoints.
+	@include breakpoints((
+		xlarge:   ( 1281px,  1680px ),
+		large:    ( 981px,   1280px ),
+		medium:   ( 737px,   980px  ),
+		small:    ( 481px,   736px  ),
+		xsmall:   ( null,    480px  )
+	));
+ 
+// Base.
+	
+	
+	
+// Component.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// Layout.
+	
+	
+	
+	
+	
+	
+	
+/* ===== _page.scss ===== */
+/* Basic */
+	// MSIE: Required for IEMobile.
+		@-ms-viewport {
+			width: device-width;
+		}
+	// MSIE: Prevents scrollbar from overlapping content.
+		body {
+			-ms-overflow-style: scrollbar;
+		}
+	// Ensures page width is always >=320px.
+		@include breakpoint('<=xsmall') {
+			html, body {
+				min-width: 320px;
+			}
+		}
+	// Set box model to border-box.
+	// Based on css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+		html {
+			box-sizing: border-box;
+		}
+		*, *:before, *:after {
+			box-sizing: inherit;
+		}
+	body {
+		background: _palette(bg-alt);
+		// Stops initial animations until page loads.
+			.is-preload {
+				*, *:before, *:after {
+					@include vendor('animation', 'none !important');
+					@include vendor('transition', 'none !important');
+				}
+			}
+	}
+/* ===== _reset.scss ===== */
+// Reset.
+// Based on meyerweb.com/eric/tools/css/reset (v2.0 | 20110126 | License: public domain)
+	html, body, div, span, applet, object,
+	iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+	pre, a, abbr, acronym, address, big, cite,
+	code, del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var, b,
+	u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+	form, label, legend, table, caption, tbody,
+	tfoot, thead, tr, th, td, article, aside,
+	canvas, details, embed, figure, figcaption,
+	footer, header, hgroup, menu, nav, output, ruby,
+	section, summary, time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	article, aside, details, figcaption, figure,
+	footer, header, hgroup, menu, nav, section {
+		display: block;
+	}
+	body {
+		line-height: 1;
+	}
+	ol, ul {
+		list-style:none;
+	}
+	blockquote,	q {
+		quotes: none;
+		:before,
+		:after {
+			content: '';
+			content: none;
+		}
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	body {
+		-webkit-text-size-adjust: none;
+	}
+	mark {
+		background-color: transparent;
+		color: inherit;
+	}
+	input::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+	input, select, textarea {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+	}
+/* ===== _typography.scss ===== */
+/* Type */
+	body, input, select, textarea {
+		color: _palette(fg);
+		font-family: _font(family);
+		font-size: 14pt;
+		font-weight: _font(weight);
+		line-height: 1.75;
+		@include breakpoint('<=xlarge') {
+			font-size: 12pt;
+		}
+		@include breakpoint('<=large') {
+			font-size: 12pt;
+		}
+		@include breakpoint('<=medium') {
+			font-size: 12pt;
+		}
+		@include breakpoint('<=small') {
+			font-size: 12pt;
+		}
+		@include breakpoint('<=xsmall') {
+			font-size: 12pt;
+		}
+	}
+	a {
+		@include vendor('transition', (
+			'color #{
+_duration(transition)}
+ ease',
+			'border-bottom-color #{
+_duration(transition)}
+ ease'
+		));
+		border-bottom: dotted 1px _palette(border-alt);
+		color: inherit;
+		text-decoration: none;
+		:before {
+			@include vendor('transition', (
+				'color #{
+_duration(transition)}
+ ease'
+			));
+		}
+		:hover {
+			border-bottom-color: transparent;
+			color: _palette(accent) !important;
+			:before {
+				color: _palette(accent) !important;
+			}
+		}
+	}
+	strong, b {
+		color: _palette(fg-bold);
+		font-weight: _font(weight-bold);
+	}
+	em, i {
+		font-style: italic;
+	}
+	p {
+		margin: 0 0 _size(element-margin) 0;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		color: _palette(fg-bold);
+		font-family: _font(family-heading);
+		font-weight: _font(weight-heading-bold);
+		letter-spacing: _font(kerning-heading);
+		line-height: 1.65;
+		margin: 0 0 (_size(element-margin) * 0.5) 0;
+		text-transform: uppercase;
+		a {
+			color: inherit;
+			border-bottom: 0;
+		}
+	}
+	h2 {
+		font-size: 1.1em;
+	}
+	h3 {
+		font-size: 0.9em;
+	}
+	h4 {
+		font-size: 0.7em;
+	}
+	h5 {
+		font-size: 0.7em;
+	}
+	h6 {
+		font-size: 0.7em;
+	}
+	sub {
+		font-size: 0.8em;
+		position: relative;
+		top: 0.5em;
+	}
+	sup {
+		font-size: 0.8em;
+		position: relative;
+		top: -0.5em;
+	}
+	blockquote {
+		border-left: solid 4px _palette(border);
+		font-style: italic;
+		margin: 0 0 _size(element-margin) 0;
+		padding: (_size(element-margin) / 4) 0 (_size(element-margin) / 4) _size(element-margin);
+	}
+	code {
+		background: _palette(border-bg);
+		border: solid 1px _palette(border);
+		font-family: _font(family-fixed);
+		font-size: 0.9em;
+		margin: 0 0.25em;
+		padding: 0.25em 0.65em;
+	}
+	pre {
+		-webkit-overflow-scrolling: touch;
+		font-family: _font(family-fixed);
+		font-size: 0.9em;
+		margin: 0 0 _size(element-margin) 0;
+		code {
+			display: block;
+			line-height: 1.75em;
+			padding: 1em 1.5em;
+			overflow-x: auto;
+		}
+	}
+	hr {
+		border: 0;
+		border-bottom: solid 1px _palette(border);
+		margin: _size(element-margin) 0;
+		.major {
+			margin: (_size(element-margin) * 1.5) 0;
+		}
+	}
+	.align-left {
+		text-align: left;
+	}
+	.align-center {
+		text-align: center;
+	}
+	.align-right {
+		text-align: right;
+	}
+/* ===== _actions.scss ===== */
+/* Actions */
+	ul.actions {
+		@include vendor('display', 'flex');
+		cursor: default;
+		list-style: none;
+		margin-left: (_size(element-margin) * -0.5);
+		padding-left: 0;
+		li {
+			padding: 0 0 0 (_size(element-margin) * 0.5);
+			vertical-align: middle;
+		}
+		.special {
+			@include vendor('justify-content', 'center');
+			width: 100%;
+			margin-left: 0;
+			li {
+				:first-child {
+					padding-left: 0;
+				}
+			}
+		}
+		.stacked {
+			@include vendor('flex-direction', 'column');
+			margin-left: 0;
+			li {
+				padding: (_size(element-margin) * 0.65) 0 0 0;
+				:first-child {
+					padding-top: 0;
+				}
+			}
+		}
+		.fit {
+			width: calc(100% + #{
+_size(element-margin) * 0.5}
+);
+			li {
+				@include vendor('flex-grow', '1');
+				@include vendor('flex-shrink', '1');
+				width: 100%;
+				> * {
+					width: 100%;
+				}
+			}
+			.stacked {
+				width: 100%;
+			}
+		}
+		@include breakpoint('<=xsmall') {
+			:not(.fixed) {
+				@include vendor('flex-direction', 'column');
+				margin-left: 0;
+				width: 100% !important;
+				li {
+					@include vendor('flex-grow', '1');
+					@include vendor('flex-shrink', '1');
+					padding: (_size(element-margin) * 0.5) 0 0 0;
+					text-align: center;
+					width: 100%;
+					> * {
+						width: 100%;
+					}
+					:first-child {
+						padding-top: 0;
+					}
+					input[type="submit"],
+					input[type="reset"],
+					input[type="button"],
+					button,
+					.button {
+						width: 100%;
+						.icon {
+							:before {
+								margin-left: -0.5em;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+/* ===== _author.scss ===== */
+/* Author */
+	.author {
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'row');
+		@include vendor('align-items', 'center');
+		@include vendor('justify-content', 'flex-end');
+		border-bottom: 0;
+		font-family: _font(family-heading);
+		font-size: 0.6em;
+		font-weight: _font(weight-heading);
+		letter-spacing: _font(kerning-heading);
+		text-transform: uppercase;
+		white-space: nowrap;
+		.name {
+			@include vendor('transition', 'border-bottom-color #{
+_duration(transition)}
+ ease');
+			border-bottom: dotted 1px _palette(border-alt);
+			display: block;
+			margin: 0 1.5em 0 0;
+		}
+		img {
+			border-radius: 100%;
+			display: block;
+			width: 4em;
+		}
+		:hover {
+			.name {
+				border-bottom-color: transparent;
+			}
+		}
+	}
+/* ===== _blurb.scss ===== */
+/* Blurb */
+	.blurb {
+		h2 {
+			font-size: 0.8em;
+			margin: 0 0 (_size(element-margin) * 0.75) 0;
+		}
+		h3 {
+			font-size: 0.7em;
+		}
+		p {
+			font-size: 0.9em;
+		}
+	}
+/* ===== _box.scss ===== */
+/* Box */
+	.box {
+		border: solid 1px _palette(border);
+		margin-bottom: _size(element-margin);
+		padding: 1.5em;
+		> :last-child,
+		> :last-child > :last-child,
+		> :last-child > :last-child > :last-child {
+			margin-bottom: 0;
+		}
+		.alt {
+			border: 0;
+			border-radius: 0;
+			padding: 0;
+		}
+	}
+/* ===== _button.scss ===== */
+/* Button */
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	button,
+	.button {
+		@include vendor('appearance', 'none');
+		@include vendor('transition', (
+			'background-color #{
+_duration(transition)}
+ ease',
+			'box-shadow #{
+_duration(transition)}
+ ease',
+			'color #{
+_duration(transition)}
+ ease'
+		));
+		background-color: transparent;
+		border: 0;
+		box-shadow: inset 0 0 0 1px _palette(border);
+		color: _palette(fg-bold) !important;
+		cursor: pointer;
+		display: inline-block;
+		font-family: _font(family-heading);
+		font-size: 0.6em;
+		font-weight: _font(weight-heading-bold);
+		height: _size(element-height) * 1.75;
+		letter-spacing: _font(kerning-heading);
+		line-height: _size(element-height) * 1.75;
+		padding: 0 2.5em;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+		white-space: nowrap;
+		:hover {
+			box-shadow: inset 0 0 0 1px _palette(accent);
+			color: _palette(accent) !important;
+			:active {
+				background-color: transparentize(_palette(accent), 0.95);
+			}
+		}
+		:before, :after {
+			color: _palette(fg-light);
+			position: relative;
+		}
+		:before {
+			left: -1em;
+			padding: 0 0 0 0.75em;
+		}
+		:after {
+			left: 1em;
+			padding: 0 0.75em 0 0;
+		}
+		.fit {
+			width: 100%;
+		}
+		.large {
+			font-size: 0.7em;
+			padding: 0 3em;
+		}
+		.small {
+			font-size: 0.5em;
+		}
+		.disabled,
+		:disabled {
+			@include vendor('pointer-events', 'none');
+			color: _palette(border) !important;
+			:before {
+				color: _palette(border) !important;
+			}
+		}
+	}
+/* ===== _form.scss ===== */
+/* Form */
+	form {
+		margin: 0 0 _size(element-margin) 0;
+		.search {
+			@include icon(false, solid);
+			position: relative;
+			:before {
+				color: _palette(fg-light);
+				content: '\f002';
+				display: block;
+				height: _size(element-height);
+				left: 0;
+				line-height: _size(element-height);
+				position: absolute;
+				text-align: center;
+				top: 0;
+				width: 2.5em;
+			}
+			> input:first-child {
+				padding-left: 2.5em;
+			}
+		}
+	}
+	label {
+		color: _palette(fg-bold);
+		display: block;
+		font-size: 0.9em;
+		font-weight: _font(weight-bold);
+		margin: 0 0 (_size(element-margin) * 0.5) 0;
+	}
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	input[type="tel"],
+	select,
+	textarea {
+		@include vendor('appearance', 'none');
+		background: _palette(border-bg);
+		border: none;
+		border: solid 1px _palette(border);
+		border-radius: 0;
+		color: inherit;
+		display: block;
+		outline: 0;
+		padding: 0 1em;
+		text-decoration: none;
+		width: 100%;
+		:invalid {
+			box-shadow: none;
+		}
+		:focus {
+			border-color: _palette(accent);
+			box-shadow: inset 0 0 0 1px _palette(accent);
+		}
+	}
+	.select-wrapper {
+		@include icon(false, solid);
+		display: block;
+		position: relative;
+		:before {
+			color: _palette(border);
+			content: '\f078';
+			display: block;
+			height: _size(element-height);
+			line-height: _size(element-height);
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 0;
+			width: _size(element-height);
+		}
+		select::-ms-expand {
+			display: none;
+		}
+	}
+	select {
+		background-image: svg-url("<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'><path d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='#{
+_palette(border)}
+' /></svg>");
+		background-size: 1.25rem;
+		background-repeat: no-repeat;
+		background-position: calc(100% - 1rem) center;
+		height: _size(element-height);
+		padding-right: _size(element-height);
+		text-overflow: ellipsis;
+		option {
+			color: _palette(fg-bold);
+			background: _palette(bg);
+		}
+		:focus {
+			::-ms-value {
+				background-color: transparent;
+			}
+		}
+		::-ms-expand {
+			display: none;
+		}
+	}
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select {
+		height: _size(element-height);
+	}
+	textarea {
+		padding: 0.75em 1em;
+	}
+	input[type="checkbox"],
+	input[type="radio"], {
+		@include vendor('appearance', 'none');
+		display: block;
+		float: left;
+		margin-right: -2em;
+		opacity: 0;
+		width: 1em;
+		z-index: -1;
+		 + label {
+			@include icon(false, solid);
+			color: _palette(fg);
+			cursor: pointer;
+			display: inline-block;
+			font-size: 1em;
+			font-weight: _font(weight);
+			padding-left: (_size(element-height) * 0.6) + 0.75em;
+			padding-right: 0.75em;
+			position: relative;
+			:before {
+				background: _palette(border-bg);
+				border: solid 1px _palette(border);
+				content: '';
+				display: inline-block;
+				font-size: 0.8em;
+				height: (_size(element-height) * 0.75);
+				left: 0;
+				line-height: (_size(element-height) * 0.75);
+				position: absolute;
+				text-align: center;
+				top: 0;
+				width: (_size(element-height) * 0.75);
+			}
+		}
+		:checked + label {
+			:before {
+				background: _palette(fg-bold);
+				border-color: _palette(fg-bold);
+				color: _palette(bg);
+				content: '\f00c';
+			}
+		}
+		:focus + label {
+			:before {
+				border-color: _palette(accent);
+				box-shadow: 0 0 0 1px _palette(accent);
+			}
+		}
+	}
+	input[type="checkbox"] {
+		 + label {
+			:before {
+			}
+		}
+	}
+	input[type="radio"] {
+		 + label {
+			:before {
+				border-radius: 100%;
+			}
+		}
+	}
+	::-webkit-input-placeholder {
+		color: _palette(fg-light) !important;
+		opacity: 1.0;
+	}
+	:-moz-placeholder {
+		color: _palette(fg-light) !important;
+		opacity: 1.0;
+	}
+	::-moz-placeholder {
+		color: _palette(fg-light) !important;
+		opacity: 1.0;
+	}
+	:-ms-input-placeholder {
+		color: _palette(fg-light) !important;
+		opacity: 1.0;
+	}
+/* ===== _icon.scss ===== */
+/* Icon */
+	.icon {
+		@include icon;
+		border-bottom: none;
+		position: relative;
+		> .label {
+			display: none;
+		}
+		:before {
+			line-height: inherit;
+		}
+		.solid {
+			:before {
+				font-weight: 900;
+			}
+		}
+		.brands {
+			:before {
+				font-family: 'Font Awesome 5 Brands';
+			}
+		}
+		.prefix {
+		}
+		.suffix {
+			:before {
+				float: right;
+			}
+		}
+	}
+/* ===== _icons.scss ===== */
+/* Icons */
+	ul.icons {
+		cursor: default;
+		list-style: none;
+		padding-left: 0;
+		li {
+			display: inline-block;
+			padding: 0 1em 0 0;
+			:last-child {
+				padding-right: 0;
+			}
+			> * {
+				border: 0;
+				.label {
+					display: none;
+				}
+			}
+		}
+	}
+/* ===== _image.scss ===== */
+/* Image */
+	.image {
+		border: 0;
+		display: inline-block;
+		position: relative;
+		img {
+			display: block;
+		}
+		.left,
+		.right {
+			max-width: 40%;
+			img {
+				width: 100%;
+			}
+		}
+		.left {
+			float: left;
+			padding: 0 1.5em 1em 0;
+			top: 0.25em;
+		}
+		.right {
+			float: right;
+			padding: 0 0 1em 1.5em;
+			top: 0.25em;
+		}
+		.fit {
+			display: block;
+			margin: 0 0 _size(element-margin) 0;
+			width: 100%;
+			img {
+				width: 100%;
+			}
+		}
+		.featured {
+			display: block;
+			margin: 0 0 _size(section-spacing) 0;
+			width: 100%;
+			img {
+				width: 100%;
+			}
+			@include breakpoint('<=small') {
+				margin: 0 0 _size(section-spacing-small) 0;
+			}
+		}
+		.main {
+			display: block;
+			margin: 0 0 (_size(element-margin) * 1.5) 0;
+			width: 100%;
+			img {
+				width: 100%;
+			}
+		}
+	}
+/* ===== _list.scss ===== */
+/* List */
+	ol {
+		list-style: decimal;
+		margin: 0 0 _size(element-margin) 0;
+		padding-left: 1.25em;
+		li {
+			padding-left: 0.25em;
+		}
+	}
+	ul {
+		list-style: disc;
+		margin: 0 0 _size(element-margin) 0;
+		padding-left: 1em;
+		li {
+			padding-left: 0.5em;
+		}
+		.alt {
+			list-style: none;
+			padding-left: 0;
+			li {
+				border-top: solid 1px _palette(border);
+				padding: 0.5em 0;
+				:first-child {
+					border-top: 0;
+					padding-top: 0;
+				}
+			}
+		}
+	}
+	dl {
+		margin: 0 0 _size(element-margin) 0;
+		dt {
+			display: block;
+			font-weight: _font(weight-bold);
+			margin: 0 0 (_size(element-margin) * 0.5) 0;
+		}
+		dd {
+			margin-left: _size(element-margin);
+		}
+	}
+/* ===== _mini-post.scss ===== */
+/* Mini Post */
+	.mini-post {
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'column-reverse');
+		background: _palette(bg);
+		border: solid 1px _palette(border);
+		margin: 0 0 _size(element-margin) 0;
+		.image {
+			overflow: hidden;
+			width: 100%;
+			img {
+				@include vendor('transition', 'transform #{
+_duration(transition)}
+ ease-out');
+				width: 100%;
+			}
+			:hover {
+				img {
+					@include vendor('transform', 'scale(1.05)');
+				}
+			}
+		}
+		header {
+			@include padding(1.25em, 1.25em, (0, 3em, 0, 0));
+			min-height: 4em;
+			position: relative;
+			@include vendor('flex-grow', '1');
+			h3 {
+				font-size: 0.7em;
+			}
+			.published {
+				display: block;
+				font-family: _font(family-heading);
+				font-size: 0.6em;
+				font-weight: _font(weight-heading);
+				letter-spacing: _font(kerning-heading);
+				margin:  -0.625em 0 (_size(element-margin) * 0.85) 0;
+				text-transform: uppercase;
+			}
+			.author {
+				position: absolute;
+				right: 2em;
+				top: 2em;
+			}
+		}
+	}
+	.mini-posts {
+		margin: 0 0 _size(element-margin) 0;
+		@include breakpoint('<=large') {
+			@include vendor('display', 'flex');
+			@include vendor('flex-wrap', 'wrap');
+			width: calc(100% + #{
+_size(element-margin)}
+);
+			> * {
+				margin: _size(element-margin) _size(element-margin) 0 0;
+				width: calc(50% - #{
+_size(element-margin)}
+);
+			}
+			> :nth-child(-n + 2) {
+				margin-top: 0;
+			}
+		}
+		@include breakpoint('<=xsmall') {
+			display: block;
+			width: 100%;
+			> * {
+				margin: 0 0 _size(element-margin) 0;
+				width: 100%;
+			}
+		}
+	}
+/* ===== _post.scss ===== */
+/* Post */
+	.post {
+		@include padding(_size(section-spacing), _size(section-spacing));
+		background: _palette(bg);
+		border: solid 1px _palette(border);
+		margin: 0 0 _size(section-spacing) 0;
+		position: relative;
+		> header {
+			@include vendor('display', 'flex');
+			border-bottom: solid 1px _palette(border);
+			left: (_size(section-spacing) * -1);
+			margin: (_size(section-spacing) * -1) 0 _size(section-spacing) 0;
+			position: relative;
+			width: calc(100% + #{
+_size(section-spacing) * 2}
+);
+			.title {
+				@include vendor('flex-grow', '1');
+				-ms-flex: 1;
+				padding: (_size(section-spacing) * 1.25) _size(section-spacing) (_size(section-spacing) * 1.1) _size(section-spacing);
+				h2 {
+					font-weight: _font(weight-heading-extrabold);
+					font-size: 1.5em;
+				}
+				> :last-child {
+					margin-bottom: 0;
+				}
+			}
+			.meta {
+				@include padding(_size(section-spacing) * 1.25, _size(section-spacing));
+				border-left: solid 1px _palette(border);
+				min-width: 17em;
+				text-align: right;
+				width: 17em;
+				> * {
+					margin: 0 0 (_size(element-margin) * 0.5) 0;
+				}
+				> :last-child {
+					margin-bottom: 0;
+				}
+				.published {
+					color: _palette(fg-bold);
+					display: block;
+					font-family: _font(family-heading);
+					font-size: 0.7em;
+					font-weight: _font(weight-heading-bold);
+					letter-spacing: _font(kerning-heading);
+					margin-top: 0.5em;
+					text-transform: uppercase;
+					white-space: nowrap;
+				}
+			}
+		}
+		> a.image.featured {
+			overflow: hidden;
+			img {
+				@include vendor('transition', 'transform #{
+_duration(transition)}
+ ease-out');
+			}
+			:hover {
+				img {
+					@include vendor('transform', 'scale(1.05)');
+				}
+			}
+		}
+		> footer {
+			@include vendor('display', 'flex');
+			@include vendor('align-items', 'center');
+			.actions {
+				@include vendor('flex-grow', '1');
+			}
+			.stats {
+				cursor: default;
+				list-style: none;
+				padding: 0;
+				li {
+					border-left: solid 1px _palette(border);
+					display: inline-block;
+					font-family: _font(family-heading);
+					font-size: 0.6em;
+					font-weight: _font(weight-heading);
+					letter-spacing: _font(kerning-heading);
+					line-height: 1;
+					margin: 0 0 0 2em;
+					padding: 0 0 0 2em;
+					text-transform: uppercase;
+					:first-child {
+						border-left: 0;
+						margin-left: 0;
+						padding-left: 0;
+					}
+					.icon {
+						border-bottom: 0;
+						:before {
+							color: _palette(border);
+							margin-right: 0.75em;
+						}
+					}
+				}
+			}
+		}
+		@include breakpoint('<=medium') {
+			border-left: 0;
+			border-right: 0;
+			left: _size(section-spacing) * -1;
+			width: calc(100% + (#{
+_size(section-spacing)}
+ * 2));
+			> header {
+				@include vendor('flex-direction', 'column');
+				@include padding(_size(section-spacing) * 1.25, _size(section-spacing), (0, 0, -0.5em, 0));
+				border-left: 0;
+				.title {
+					-ms-flex: 0 1 auto;
+					margin: 0 0 _size(element-margin) 0;
+					padding: 0;
+					text-align: center;
+				}
+				.meta {
+					@include vendor('align-items', 'center');
+					@include vendor('display', 'flex');
+					@include vendor('justify-content', 'center');
+					border-left: 0;
+					margin: 0 0 _size(element-margin) 0;
+					padding-top: 0;
+					padding: 0;
+					text-align: left;
+					width: 100%;
+					> * {
+						border-left: solid 1px _palette(border);
+						margin-left: 2em;
+						padding-left: 2em;
+					}
+					> :first-child {
+						border-left: 0;
+						margin-left: 0;
+						padding-left: 0;
+					}
+					.published {
+						margin-bottom: 0;
+						margin-top: 0;
+					}
+					.author {
+						@include vendor('flex-direction', 'row-reverse');
+						margin-bottom: 0;
+						.name {
+							margin: 0 0 0 1.5em;
+						}
+						img {
+							width: 3.5em;
+						}
+					}
+				}
+			}
+		}
+		@include breakpoint('<=small') {
+			@include padding(_size(section-spacing-small), _size(section-spacing-small));
+			left: _size(section-spacing-small) * -1;
+			margin: 0 0 _size(element-margin) 0;
+			width: calc(100% + (#{
+_size(section-spacing-small)}
+ * 2));
+			> header {
+				@include padding(_size(section-spacing-small) * 2, _size(section-spacing-small), (0, 0, -0.5em, 0));
+				left: (_size(section-spacing-small) * -1);
+				margin: (_size(section-spacing-small) * -1) 0 _size(section-spacing-small) 0;
+				width: calc(100% + #{
+_size(section-spacing-small) * 2}
+);
+				.title {
+					h2 {
+						font-size: 1.1em;
+					}
+				}
+			}
+		}
+		@include breakpoint('<=xsmall') {
+			> header {
+				.meta {
+					@include vendor('align-items', 'center');
+					@include vendor('flex-direction', 'column');
+					> * {
+						border-left: 0;
+						margin: (_size(element-margin) * 0.5) 0 0 0;
+						padding-left: 0;
+					}
+					.author {
+						.name {
+							display: none;
+						}
+					}
+				}
+			}
+			> .image.featured {
+				margin-left: _size(section-spacing-small) * -1;
+				margin-top: calc(#{
+_size(section-spacing-small) * -1}
+ - 1px);
+				width: calc(100% + #{
+_size(section-spacing-small) * 2}
+);
+			}
+			> footer {
+				@include vendor('align-items', 'stretch');
+				@include vendor('flex-direction', 'column-reverse');
+				.stats {
+					text-align: center;
+					li {
+						margin: 0 0 0 1.25em;
+						padding: 0 0 0 1.25em;
+					}
+				}
+			}
+		}
+	}
+/* ===== _posts.scss ===== */
+/* Posts */
+	ul.posts {
+		list-style: none;
+		padding: 0;
+		li {
+			border-top: dotted 1px _palette(border);
+			margin: (_size(element-margin) * 0.75) 0 0 0;
+			padding: (_size(element-margin) * 0.75) 0 0 0;
+			:first-child {
+				border-top: 0;
+				margin-top: 0;
+				padding-top: 0;
+			}
+		}
+		article {
+			@include vendor('display', 'flex');
+			@include vendor('align-items', 'flex-start');
+			@include vendor('flex-direction', 'row-reverse');
+			.image {
+				display: block;
+				margin-right: 1.5em;
+				min-width: 4em;
+				width: 4em;
+				img {
+					width: 100%;
+				}
+			}
+			header {
+				@include vendor('flex-grow', '1');
+				-ms-flex: 1;
+				h3 {
+					font-size: 0.7em;
+					margin-top: 0.125em;
+				}
+				.published {
+					display: block;
+					font-family: _font(family-heading);
+					font-size: 0.6em;
+					font-weight: _font(weight-heading);
+					letter-spacing: _font(kerning-heading);
+					margin: -0.625em 0 (_size(element-margin) * 0.85) 0;
+					text-transform: uppercase;
+				}
+				> :last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+/* ===== _row.scss ===== */
+/* Row */
+	.row {
+		@include html-grid(1em);
+		@include breakpoint('<=xlarge') {
+			@include html-grid(1em, 'xlarge');
+		}
+		@include breakpoint('<=large') {
+			@include html-grid(1em, 'large');
+		}
+		@include breakpoint('<=medium') {
+			@include html-grid(1em, 'medium');
+		}
+		@include breakpoint('<=small') {
+			@include html-grid(1em, 'small');
+		}
+		@include breakpoint('<=xsmall') {
+			@include html-grid(1em, 'xsmall');
+		}
+	}
+/* ===== _section.scss ===== */
+/* Section/Article */
+	section, article {
+		.special {
+			text-align: center;
+		}
+	}
+	header {
+		p {
+			font-family: _font(family-heading);
+			font-size: 0.7em;
+			font-weight: _font(weight-heading);
+			letter-spacing: _font(kerning-heading);
+			line-height: 2.5;
+			margin-top: -1em;
+			text-transform: uppercase;
+		}
+	}
+/* ===== _table.scss ===== */
+/* Table */
+	.table-wrapper {
+		-webkit-overflow-scrolling: touch;
+		overflow-x: auto;
+	}
+	table {
+		margin: 0 0 _size(element-margin) 0;
+		width: 100%;
+		tbody {
+			tr {
+				border: solid 1px _palette(border);
+				border-left: 0;
+				border-right: 0;
+				:nth-child(2n + 1) {
+					background-color: _palette(border-bg);
+				}
+			}
+		}
+		td {
+			padding: 0.75em 0.75em;
+		}
+		th {
+			color: _palette(fg-bold);
+			font-size: 0.9em;
+			font-weight: _font(weight-bold);
+			padding: 0 0.75em 0.75em 0.75em;
+			text-align: left;
+		}
+		thead {
+			border-bottom: solid 2px _palette(border);
+		}
+		tfoot {
+			border-top: solid 2px _palette(border);
+		}
+		.alt {
+			border-collapse: separate;
+			tbody {
+				tr {
+					td {
+						border: solid 1px _palette(border);
+						border-left-width: 0;
+						border-top-width: 0;
+						:first-child {
+							border-left-width: 1px;
+						}
+					}
+					:first-child {
+						td {
+							border-top-width: 1px;
+						}
+					}
+				}
+			}
+			thead {
+				border-bottom: 0;
+			}
+			tfoot {
+				border-top: 0;
+			}
+		}
+	}
+/* ===== _footer.scss ===== */
+/* Footer */
+	#footer {
+		.icons {
+			color: _palette(fg-light);
+		}
+		.copyright {
+			color: _palette(fg-light);
+			font-family: _font(family-heading);
+			font-size: 0.5em;
+			font-weight: _font(weight-heading);
+			letter-spacing: _font(kerning-heading);
+			text-transform: uppercase;
+		}
+		body.single  {
+			text-align: center;
+		}
+	}
+/* ===== _header.scss ===== */
+/* Header */
+	body {
+		padding-top: 3.5em;
+	}
+	#header {
+		@include vendor('display', 'flex');
+		@include vendor('justify-content', 'space-between');
+		background-color: _palette(bg);
+		border-bottom: solid 1px _palette(border);
+		height: 3.5em;
+		left: 0;
+		line-height: 3.5em;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: _misc(z-index-base);
+		.logo {
+			width: 95px;
+		}
+		a {
+			color: inherit;
+			text-decoration: none;
+			border: none;
+		}
+		ul {
+			list-style: none;
+			margin: 0;
+			padding-left: 0;
+			li {
+				display: inline-block;
+				padding-left: 0;
+			}
+		}
+		h1 {
+			height: inherit;
+			line-height: inherit;
+			padding: 0 0 0 1.5em;
+			white-space: nowrap;
+			a {
+				font-size: 0.7em;
+			}
+		}
+		.links {
+			@include vendor('flex', '1');
+			border-left: solid 1px _palette(border);
+			height: inherit;
+			line-height: inherit;
+			margin-left: 1.5em;
+			overflow: hidden;
+			padding-left: 1.5em;
+			ul {
+				li {
+					border-left: solid 1px _palette(border);
+					line-height: 1;
+					margin-left: 1em;
+					padding-left: 1em;
+					:first-child {
+						border-left: 0;
+						margin-left: 0;
+						padding-left: 0;
+					}
+					a {
+						border-bottom: 0;
+						font-family: _font(family-heading);
+						font-size: 0.7em;
+						font-weight: _font(weight-heading);
+						letter-spacing: _font(kerning-heading);
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+		.main {
+			height: inherit;
+			line-height: inherit;
+			text-align: right;
+			ul {
+				height: inherit;
+				line-height: inherit;
+				li {
+					border-left: solid 1px _palette(border);
+					height: inherit;
+					line-height: inherit;
+					white-space: nowrap;
+					> * {
+						display: block;
+						float: left;
+					}
+					> a {
+						@include icon(false, solid);
+						border-bottom: 0;
+						color: _palette(fg-light);
+						overflow: hidden;
+						position: relative;
+						text-indent: 4em;
+						width: 4em;
+						:before {
+							display: block;
+							height: inherit;
+							left: 0;
+							line-height: inherit;
+							position: absolute;
+							text-align: center;
+							text-indent: 0;
+							top: 0;
+							width: inherit;
+						}
+					}
+				}
+			}
+		}
+		form {
+			margin: 0;
+			input {
+				display: inline-block;
+				height: 2.5em;
+				position: relative;
+				top: -2px;
+				vertical-align: middle;
+			}
+		}
+		#search {
+			@include vendor('transition', 'all 0.5s ease');
+			max-width: 0;
+			opacity: 0;
+			overflow: hidden;
+			padding: 0;
+			white-space: nowrap;
+			input {
+				width: 12em;
+			}
+			.visible {
+				max-width: 12.5em;
+				opacity: 1;
+				padding: 0 0.5em 0 0;
+			}
+		}
+		@include breakpoint('<=medium') {
+			.links {
+				display: none;
+			}
+		}
+		@include breakpoint('<=small') {
+			height: 2.75em;
+			line-height: 2.75em;
+			h1 {
+				padding: 0 0 0 1em;
+			}
+			.main {
+				.search {
+					display: none;
+				}
+			}
+		}
+	}
+/* ===== _intro.scss ===== */
+/* Intro */
+	#intro {
+		.logo {
+			border-bottom: 0;
+			display: inline-block;
+			margin: 0 0 (_size(element-margin) * 0.5) 0;
+			overflow: hidden;
+			position: relative;
+			width: 4em;
+			:before {
+				background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="none" zoomAndPan="disable"><polygon points="0,0 100,0 100,25 50,0 0,25" style="fill:#{
+_palette(bg-alt)}
+" /><polygon points="0,100 100,100 100,75 50,100 0,75"  style="fill:#{
+_palette(bg-alt)}
+" /></svg>');
+				background-position: top left;
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				content: '';
+				display: block;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+			img {
+				display: block;
+				width: 50%;
+    			margin: 0 auto;
+			}
+		}
+		header {
+			h2 {
+				font-size: 2em;
+				font-weight: _font(weight-heading-extrabold);
+			}
+			p {
+				font-size: 0.8em;
+			}
+		}
+		@include breakpoint('<=large') {
+			margin: 0 0 _size(section-spacing) 0;
+			text-align: center;
+			header {
+				h2 {
+					font-size: 2em;
+				}
+				p {
+					font-size: 0.7em;
+				}
+			}
+		}
+		@include breakpoint('<=small') {
+			margin: 0 0 _size(section-spacing-small) 0;
+			padding: 1.25em 0;
+			> :last-child {
+				margin-bottom: 0;
+			}
+			.logo {
+				margin: 0 0 (_size(element-margin) * 0.25) 0;
+			}
+			header {
+				h2 {
+					font-size: 1.25em;
+				}
+				> :last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+/* ===== _main.scss ===== */
+/* Main */
+	#main {
+		@include vendor('flex-grow', '1');
+		-ms-flex: 1;
+		width: 100%;
+	}
+/* ===== _menu.scss ===== */
+/* Menu */
+	#menu {
+		@include vendor('transform', 'translateX(#{
+_size(menu)}
+)');
+		@include vendor('transition', (
+			'transform #{
+_duration(menu)}
+ ease',
+			'visibility #{
+_duration(menu)}
+'
+		));
+		-webkit-overflow-scrolling: touch;
+		background: _palette(bg);
+		border-left: solid 1px _palette(border);
+		box-shadow: none;
+		height: 100%;
+		max-width: 80%;
+		overflow-y: auto;
+		position: fixed;
+		right: 0;
+		top: 0;
+		visibility: hidden;
+		width: _size(menu);
+		z-index: _misc(z-index-base) + 2;
+		> * {
+			border-top: solid 1px _palette(border);
+			padding: _size(section-spacing);
+			> :last-child {
+				margin-bottom: 0;
+			}
+		}
+		> :first-child {
+			border-top: 0;
+		}
+		.links {
+			list-style: none;
+			padding: 0;
+			> li {
+				border: 0;
+				border-top: dotted 1px _palette(border);
+				margin: 1.5em 0 0 0;
+				padding: 1.5em 0 0 0;
+				a {
+					display: block;
+					border-bottom: 0;
+					h3 {
+						@include vendor('transition', 'color #{
+_duration(transition)}
+ ease');
+						font-size: 0.7em;
+					}
+					p {
+						font-family: _font(family-heading);
+						font-size: 0.6em;
+						font-weight: _font(weight-heading);
+						letter-spacing: _font(kerning-heading);
+						letter-spacing: _size(letter-spacing-alt);
+						margin-bottom: 0;
+						text-decoration: none;
+						text-transform: uppercase;
+					}
+					:hover {
+						h3 {
+							color: _palette(accent);
+						}
+					}
+				}
+				:first-child {
+					border-top: 0;
+					margin-top: 0;
+					padding-top: 0;
+				}
+			}
+		}
+		body.is-menu-visible  {
+			@include vendor('transform', 'translateX(0)');
+			visibility: visible;
+		}
+		@include breakpoint('<=small') {
+			> * {
+				padding: _size(section-spacing-small);
+			}
+		}
+	}
+/* ===== _sidebar.scss ===== */
+/* Sidebar */
+	#sidebar {
+		margin-right: _size(section-spacing);
+		min-width: 22em;
+		width: 22em;
+		> * {
+			border-top: solid 1px _palette(border);
+			margin: _size(section-spacing) 0 0 0;
+			padding: _size(section-spacing) 0 0 0;
+		}
+		> :first-child {
+			border-top: 0;
+			margin-top: 0;
+			padding-top: 0;
+		}
+		@include breakpoint('<=large') {
+			border-top: solid 1px _palette(border);
+			margin: _size(section-spacing) 0 0 0;
+			min-width: 0;
+			padding: _size(section-spacing) 0 0 0;
+			width: 100%;
+			overflow-x: hidden;
+		}
+	}
+/* ===== _wrapper.scss ===== */
+/* Wrapper */
+	#wrapper {
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'row-reverse');
+		@include vendor('transition', 'opacity #{
+_duration(menu)}
+ ease');
+		margin: 0 auto;
+		max-width: 100%;
+		opacity: 1;
+		padding: (_size(section-spacing) * 1.5);
+		width: 90em;
+		body.is-menu-visible  {
+			opacity: 0.15;
+		}
+		@include breakpoint('<=xlarge') {
+			padding: _size(section-spacing);
+		}
+		@include breakpoint('<=large') {
+			display: block;
+		}
+		@include breakpoint('<=small') {
+			padding: _size(section-spacing-small);
+		}
+		body.single  {
+			display: block;
+		}
+	}
+/* ===== _breakpoints.scss ===== */
+// breakpoints.scss v1.0 | @ajlkn | MIT licensed */
+// Vars.
+	/// Breakpoints.
+	/// @var {
+list}
+	
+// Mixins.
+	/// Sets breakpoints.
+	/// @param {
+map}
+ $x Breakpoints.
+	@mixin breakpoints(
+	}
+	/// Wraps @content in a @media block targeting a specific orientation.
+	/// @param {
+string}
+ $orientation Orientation.
+	@mixin orientation($orientation) {
+		@media screen and (orientation: #{
+$orientation}
+) {
+			@content;
+		}
+	}
+	/// Wraps @content in a @media block using a given query.
+	/// @param {
+string}
+ $query Query.
+	@mixin breakpoint(
+		
+		
+		// Determine operator, breakpoint.
+			// Greater than or equal.
+				@if (str-slice($query, 0, 2) == '>=') {
+					
+					
+				}
+			// Less than or equal.
+				@elseif (str-slice($query, 0, 2) == '<=') {
+					
+					
+				}
+			// Greater than.
+				@elseif (str-slice($query, 0, 1) == '>') {
+					
+					
+				}
+			// Less than.
+				@elseif (str-slice($query, 0, 1) == '<') {
+					
+					
+				}
+			// Not.
+				@elseif (str-slice($query, 0, 1) == '!') {
+					
+					
+				}
+			// Equal.
+				@else {
+					
+					
+				}
+		// Build media.
+			@if ($breakpoint and map-has-key($breakpoints, $breakpoint)) {
+				
+				// Range.
+					@if (type-of($a) == 'list') {
+						
+						
+						// Max only.
+							@if ($x == null) {
+								// Greater than or equal (>= 0 / anything)
+									@if ($op == 'gte') {
+										
+									}
+								// Less than or equal (<= y)
+									@elseif ($op == 'lte') {
+										
+									}
+								// Greater than (> y)
+									@elseif ($op == 'gt') {
+										
+									}
+								// Less than (< 0 / invalid)
+									@elseif ($op == 'lt') {
+										
+									}
+								// Not (> y)
+									@elseif ($op == 'not') {
+										
+									}
+								// Equal (<= y)
+									@else {
+										
+									}
+							}
+						// Min only.
+							@else if ($y == null) {
+								// Greater than or equal (>= x)
+									@if ($op == 'gte') {
+										
+									}
+								// Less than or equal (<= inf / anything)
+									@elseif ($op == 'lte') {
+										
+									}
+								// Greater than (> inf / invalid)
+									@elseif ($op == 'gt') {
+										
+									}
+								// Less than (< x)
+									@elseif ($op == 'lt') {
+										
+									}
+								// Not (< x)
+									@elseif ($op == 'not') {
+										
+									}
+								// Equal (>= x)
+									@else {
+										
+									}
+							}
+						// Min and max.
+							@else {
+								// Greater than or equal (>= x)
+									@if ($op == 'gte') {
+										
+									}
+								// Less than or equal (<= y)
+									@elseif ($op == 'lte') {
+										
+									}
+								// Greater than (> y)
+									@elseif ($op == 'gt') {
+										
+									}
+								// Less than (< x)
+									@elseif ($op == 'lt') {
+										
+									}
+								// Not (< x and > y)
+									@elseif ($op == 'not') {
+										
+									}
+								// Equal (>= x and <= y)
+									@else {
+										
+									}
+							}
+					}
+				// String.
+					@else {
+						// Missing a media type? Prefix with "screen".
+							@if (str-slice($a, 0, 1) == '(') {
+								
+							}
+						// Otherwise, use as-is.
+							@else {
+								
+							}
+					}
+			}
+		// Output.
+	        @media #{
+$media}
+ {
+				@content;
+			}
+	}
+/* ===== _functions.scss ===== */
+/// Removes a specific item from a list.
+/// @author Hugo Giraudel
+/// @param {
+list}
+ $list List.
+/// @param {
+integer}
+ $index Index.
+/// @return {
+list}
+ Updated list.
+@function remove-nth($list, $index) {
+	
+	@if type-of($index) != number {
+		@warn "
+	}
+	@else if $index == 0 {
+		@warn "List index 0 must be a non-zero integer for `remove-nth`.";
+	}
+	@else if abs($index) > length($list) {
+		@warn "List index is #{
+$index}
+ but list is only #{
+length($list)}
+ item long for `remove-nth`.";
+	}
+	@else {
+		
+		
+		@for $i from 1 through length($list) {
+			@if $i != $index {
+				
+			}
+		}
+	}
+	@return $result;
+}
+/// Gets a value from a map.
+/// @author Hugo Giraudel
+/// @param {
+map}
+ $map Map.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function val($map, $keys...) {
+	@if nth($keys, 1) == null {
+		
+	}
+	@each $key in $keys {
+		
+	}
+	@return $map;
+}
+/// Gets a duration value.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function _duration($keys...) {
+	@return val($duration, $keys...);
+}
+/// Gets a font value.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function _font($keys...) {
+	@return val($font, $keys...);
+}
+/// Gets a misc value.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function _misc($keys...) {
+	@return val($misc, $keys...);
+}
+/// Gets a palette value.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function _palette($keys...) {
+	@return val($palette, $keys...);
+}
+/// Gets a size value.
+/// @param {
+string}
+ $keys Key(s).
+/// @return {
+string}
+ Value.
+@function _size($keys...) {
+	@return val($size, $keys...);
+}
+/* ===== _html-grid.scss ===== */
+// html-grid.scss v1.0 | @ajlkn | MIT licensed */
+// Mixins.
+	/// Initializes the current element as an HTML grid.
+	/// @param {
+mixed}
+ $gutters Gutters (either a single number to set both column/row gutters, or a list to set them individually).
+	/// @param {
+mixed}
+ $suffix Column class suffix (optional;
+ either a single suffix or a list).
+	@mixin html-grid(
+			
+			
+			// Suffixes.
+				
+				@if (type-of($suffix) == 'list') {
+					
+				}
+				@else {
+					
+				}
+			// Gutters.
+				
+				
+				@if (type-of($gutters) == 'list') {
+					
+					
+				}
+				@else {
+					
+					
+				}
+		// Row.
+			display: flex;
+			flex-wrap: wrap;
+			box-sizing: border-box;
+			align-items: stretch;
+			// Columns.
+				> * {
+					box-sizing: border-box;
+				}
+			// Gutters.
+				.gtr-uniform {
+					> * {
+						> :last-child {
+							margin-bottom: 0;
+						}
+					}
+				}
+			// Alignment.
+				.aln-left {
+					justify-content: flex-start;
+				}
+				.aln-center {
+					justify-content: center;
+				}
+				.aln-right {
+					justify-content: flex-end;
+				}
+				.aln-top {
+					align-items: flex-start;
+				}
+				.aln-middle {
+					align-items: center;
+				}
+				.aln-bottom {
+					align-items: flex-end;
+				}
+		// Step through suffixes.
+			@each $suffix in $suffixes {
+				// Suffix.
+					@if ($suffix != '') {
+						
+					}
+					@else {
+						
+					}
+				// Row.
+					// Important.
+						> .imp#{
+$suffix}
+ {
+							order: -1;
+						}
+					// Columns, offsets.
+						@for $i from 1 through $cols {
+							> .col-#{
+$i}
+#{
+$suffix}
+ {
+								width: $unit * $i;
+							}
+							> .off-#{
+$i}
+#{
+$suffix}
+ {
+								margin-left: $unit * $i;
+							}
+						}
+					// Step through multipliers.
+						@each $multiplier in $multipliers {
+							// Gutters.
+								
+								@if ($multiplier != 1) {
+									
+								}
+								#{
+$class}
+ {
+									margin-top: ($guttersRows * $multiplier * -1);
+									margin-left: ($guttersCols * $multiplier * -1);
+									> * {
+										padding: ($guttersRows * $multiplier) 0 0 ($guttersCols * $multiplier);
+									}
+									// Uniform.
+										.gtr-uniform {
+											margin-top: $guttersCols * $multiplier * -1;
+											> * {
+												padding-top: $guttersCols * $multiplier;
+											}
+										}
+								}
+						}
+			}
+	}
+/* ===== _mixins.scss ===== */
+/// Makes an element's :before pseudoelement a FontAwesome icon.
+/// @param {
+string}
+ $content Optional content value to use.
+/// @param {
+string}
+ $category Optional category to use.
+/// @param {
+string}
+ $where Optional pseudoelement to target (before or after).
+@mixin icon(
+	:#{
+$where}
+ {
+		@if $content {
+			content: $content;
+		}
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		display: inline-block;
+		font-style: normal;
+		font-variant: normal;
+		text-rendering: auto;
+		line-height: 1;
+		text-transform: none !important;
+		@if ($category == brands) {
+			font-family: 'Font Awesome 5 Brands';
+		}
+		@elseif ($category == solid) {
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
+		}
+		@else {
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 400;
+		}
+	}
+}
+/// Applies padding to an element, taking the current element-margin value into account.
+/// @param {
+mixed}
+ $tb Top/bottom padding.
+/// @param {
+mixed}
+ $lr Left/right padding.
+/// @param {
+list}
+ $pad Optional extra padding (in the following order top, right, bottom, left)
+/// @param {
+bool}
+ $important If true, adds !important.
+@mixin padding($tb, $lr, 
+	}
+	
+	@if unit(_size(element-margin)) == 'rem' {
+		
+	}
+	padding: ($tb + nth($pad,1)) ($lr + nth($pad,2)) max($x, $tb - _size(element-margin) + nth($pad,3)) ($lr + nth($pad,4)) #{
+$important}
+;
+}
+/// Encodes a SVG data URL so IE doesn't choke (via codepen.io/jakob-e/pen/YXXBrp).
+/// @param {
+string}
+ $svg SVG data URL.
+/// @return {
+string}
+ Encoded SVG data URL.
+@function svg-url($svg) {
+	
+	
+	
+	
+	
+	
+	
+	
+	', '%3B');
+	@return url("data:image/svg+xml;
+charset=utf8,#{
+$svg}
+");
+}
+/* ===== _vars.scss ===== */
+// Misc.
+	
+// Duration.
+	
+// Size.
+	
+// Font.
+	
+// Palette.
+	
+/* ===== _vendor.scss ===== */
+// vendor.scss v1.0 | @ajlkn | MIT licensed */
+// Vars.
+	/// Vendor prefixes.
+	/// @var {
+list}
+	
+	/// Properties that should be vendorized.
+	/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
+	/// @var {
+list}
+	
+	/// Values that should be vendorized.
+	/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
+	/// @var {
+list}
+	
+// Functions.
+	/// Removes a specific item from a list.
+	/// @author Hugo Giraudel
+	/// @param {
+list}
+ $list List.
+	/// @param {
+integer}
+ $index Index.
+	/// @return {
+list}
+ Updated list.
+	@function remove-nth($list, $index) {
+		
+		@if type-of($index) != number {
+			@warn "
+		}
+		@else if $index == 0 {
+			@warn "List index 0 must be a non-zero integer for `remove-nth`.";
+		}
+		@else if abs($index) > length($list) {
+			@warn "List index is #{
+$index}
+ but list is only #{
+length($list)}
+ item long for `remove-nth`.";
+		}
+		@else {
+			
+			
+			@for $i from 1 through length($list) {
+				@if $i != $index {
+					
+				}
+			}
+		}
+		@return $result;
+	}
+	/// Replaces a substring within another string.
+	/// @author Hugo Giraudel
+	/// @param {
+string}
+ $string String.
+	/// @param {
+string}
+ $search Substring.
+	/// @param {
+string}
+ $replace Replacement.
+	/// @return {
+string}
+ Updated string.
+	@function str-replace($string, $search, 
+		@if $index {
+			@return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+		}
+		@return $string;
+	}
+	/// Replaces a substring within each string in a list.
+	/// @param {
+list}
+ $strings List of strings.
+	/// @param {
+string}
+ $search Substring.
+	/// @param {
+string}
+ $replace Replacement.
+	/// @return {
+list}
+ Updated list of strings.
+	@function str-replace-all($strings, $search, 
+		}
+		@return $strings;
+	}
+// Mixins.
+	/// Wraps @content in vendorized keyframe blocks.
+	/// @param {
+string}
+ $name Name.
+	@mixin keyframes($name) {
+		@-moz-keyframes #{
+$name}
+ {
+ @content;
+ }
+		@-webkit-keyframes #{
+$name}
+ {
+ @content;
+ }
+		@-ms-keyframes #{
+$name}
+ {
+ @content;
+ }
+		@keyframes #{
+$name}
+ {
+ @content;
+ }
+	}
+	/// Vendorizes a declaration's property and/or value(s).
+	/// @param {
+string}
+ $property Property.
+	/// @param {
+mixed}
+ $value String/list of value(s).
+	@mixin vendor($property, $value) {
+		// Determine if property should expand.
+			
+		// Determine if value should expand (and if so, add '-prefix-' placeholder).
+			
+			@each $x in $value {
+				@each $y in $vendor-values {
+					@if $y == str-slice($x, 1, str-length($y)) {
+						
+						
+					}
+				}
+			}
+		// Expand property?
+			@if $expandProperty {
+			    @each $vendor in $vendor-prefixes {
+			        #{
+$vendor}
+#{
+$property}
+: #{
+str-replace-all($value, '-prefix-', $vendor)}
+;
+			    }
+			}
+		// Expand just the value?
+			@elseif $expandValue {
+			    @each $vendor in $vendor-prefixes {
+			        #{
+$property}
+: #{
+str-replace-all($value, '-prefix-', $vendor)}
+;
+			    }
+			}
+		// Neither? Treat them as a normal declaration.
+			@else {
+		        #{
+$property}
+: #{
+$value}
+;
+			}
+	}
