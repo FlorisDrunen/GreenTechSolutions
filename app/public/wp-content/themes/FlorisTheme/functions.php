@@ -10,17 +10,17 @@ add_action('after_setup_theme', 'test');
 
 function loadCss()
 {
-    wp_enqueue_style('theme_style', get_stylesheet_uri());
+    wp_enqueue_style('css', get_template_directory_uri() . '/assets/css/style.css', '1.0.0', true);
 
     wp_enqueue_script('jquery');
     
     // Vendor scripts
-    wp_enqueue_script('browser', get_template_directory_uri() . '/browser.min.js', array('jquery'), '1.0.0', true);
-    wp_enqueue_script('breakpoints', get_template_directory_uri() . '/breakpoints.min.js', array('jquery'), '1.0.0', true);
-    wp_enqueue_script('util', get_template_directory_uri() . '/util.js', array('jquery', 'breakpoints'), '1.0.0', true);
+    wp_enqueue_script('browser', get_template_directory_uri() . '/assets/js/browser.min.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('breakpoints', get_template_directory_uri() . '/assets/js/breakpoints.min.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('util', get_template_directory_uri() . '/assets/js/util.js', array('jquery', 'breakpoints'), '1.0.0', true);
 
     // Main script (na util, breakpoints en jquery)
-    wp_enqueue_script('main', get_template_directory_uri() . '/main.js', array('jquery', 'util', 'breakpoints'), '1.0.0', true);
+    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'util', 'breakpoints'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'loadCss');
 
