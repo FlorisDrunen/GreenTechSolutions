@@ -1,10 +1,10 @@
-<!DOCTYPE HTML>
+<?php
+?><!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title><?php bloginfo( 'name' ); ?><?php wp_title( ' - ', true, 'left' ); ?></title>
-    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/main.css' ); ?>" />
     <?php wp_head(); ?>
 </head>
 <body class="is-preload">
@@ -25,44 +25,119 @@
                         'items_wrap'     => '<ul>%3$s</ul>',
                     ) );
                 } else {
-                    echo '<ul><li><a href="#">Lorem</a></li><li><a href="#">Ipsum</a></li><li><a href="#">Feugiat</a></li></ul>';
+                    echo '<ul>
+                        <li><a href="#">Lorem</a></li>
+                        <li><a href="#">Ipsum</a></li>
+                        <li><a href="#">Feugiat</a></li>
+                        <li><a href="#">Tempus</a></li>
+                        <li><a href="#">Adipiscing</a></li>
+                    </ul>';
                 }
                 ?>
             </nav>
+
+            <nav class="main">
+                <ul></ul>
+            </nav>
         </header>
+
+        <!-- Menu (leeg – behoud structuur van HTML) -->
+        <section id="menu">
+            <section></section>
+            <section></section>
+            <section></section>
+        </section>
 
         <!-- Main -->
         <div id="main">
-            <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-                <article class="post">
-                    <header>
-                        <div class="title">
-                            <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+
+            <!-- Hero / Intro (neemt site title & tagline) -->
+            <section class="intro">
+                <div class="inner">
+                    <h2><?php bloginfo( 'name' ); ?></h2>
+                    <p><?php bloginfo( 'description' ); ?></p>
+                </div>
+            </section>
+
+            <!-- Posts list -->
+            <section class="posts">
+                <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+                    <article class="post">
+                        <header>
+                            <div class="title">
+                                <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                            </div>
+                            <div class="meta">
+                                <time class="published" datetime="<?php echo get_the_date( 'c' ); ?>"><?php echo get_the_date(); ?></time>
+                                <span class="author"><?php the_author(); ?></span>
+                            </div>
+                        </header>
+
+                        <?php if ( has_post_thumbnail() ) : ?>
+                            <a class="image featured" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'large' ); ?></a>
+                        <?php else : ?>
+                            <a class="image featured" href="<?php the_permalink(); ?>">
+                                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/pic01.jpg' ); ?>" alt="" />
+                            </a>
+                        <?php endif; ?>
+
+                        <div class="excerpt">
+                            <?php the_excerpt(); ?>
                         </div>
-                        <div class="meta">
-                            <time class="published" datetime="<?php echo get_the_date( 'c' ); ?>"><?php echo get_the_date(); ?></time>
-                            <span class="author"><?php the_author(); ?></span>
-                        </div>
-                    </header>
 
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <span class="image featured"><?php the_post_thumbnail( 'large' ); ?></span>
-                    <?php endif; ?>
+                        <footer>
+                            <ul class="actions">
+                                <li><a href="<?php the_permalink(); ?>" class="button">Read more</a></li>
+                            </ul>
+                        </footer>
+                    </article>
+                <?php endwhile; else : ?>
 
-                    <p><?php the_excerpt(); ?></p>
+                    <!-- Fallback / voorbeeldblokken -->
+                    <div class="no-posts">
+                        <article class="post">
+                            <header>
+                                <div class="title">
+                                    <h2>Voorbeeldpost: Welkom</h2>
+                                </div>
+                                <div class="meta">
+                                    <time class="published" datetime="<?php echo date( 'c' ); ?>"><?php echo date_i18n( get_option( 'date_format' ) ); ?></time>
+                                    <span class="author"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
+                                </div>
+                            </header>
 
-                    <footer>
-                        <ul class="stats">
-                            <li><a href="<?php the_permalink(); ?>">Read more</a></li>
-                        </ul>
-                    </footer>
-                </article>
-            <?php endwhile; else : ?>
-                <p><?php esc_html_e( 'No posts found.', 'simple-wp-theme' ); ?></p>
-            <?php endif; ?>
+                            <a class="image featured" href="#"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/pic02.jpg' ); ?>" alt="" /></a>
 
-            <!-- Pagination -->
-            <nav class="pagination"><?php the_posts_pagination(); ?></nav>
+                            <div class="excerpt">
+                                <p>Er zijn nog geen berichten. Dit is voorbeeldcontent om je thema te laten lijken op de originele HTML-website.</p>
+                            </div>
+
+                            <footer>
+                                <ul class="actions">
+                                    <li><a href="#" class="button">Lees meer</a></li>
+                                </ul>
+                            </footer>
+                        </article>
+                    </div>
+
+                <?php endif; ?>
+
+                <!-- Pagination -->
+                <nav class="pagination"><?php the_posts_pagination(); ?></nav>
+            </section>
+
+            <!-- Demo widgets (zoals in originele HTML) -->
+            <section class="demo-widgets">
+                <div class="inner">
+                    <h3>Voorbeeld lijst</h3>
+                    <ul class="icons">
+                        <li><span class="icon fa-check"> Feature één</span></li>
+                        <li><span class="icon fa-check"> Feature twee</span></li>
+                        <li><span class="icon fa-check"> Feature drie</span></li>
+                    </ul>
+                </div>
+            </section>
+
         </div>
 
         <!-- Footer -->

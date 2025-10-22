@@ -6,7 +6,6 @@ get_header();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title><?php single_post_title(); ?> - <?php bloginfo( 'name' ); ?></title>
-    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/main.css' ); ?>" />
     <?php wp_head(); ?>
 </head>
 <body class="single is-preload">
@@ -17,7 +16,25 @@ get_header();
         <!-- Header -->
         <header id="header">
             <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></h1>
+            <nav class="links">
+                <?php
+                if ( has_nav_menu( 'primary' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'primary',
+                        'container'      => false,
+                        'items_wrap'     => '<ul>%3$s</ul>',
+                    ) );
+                }
+                ?>
+            </nav>
         </header>
+
+        <!-- Menu (leeg) -->
+        <section id="menu">
+            <section></section>
+            <section></section>
+            <section></section>
+        </section>
 
         <!-- Main -->
         <div id="main">
@@ -44,9 +61,17 @@ get_header();
                     </div>
 
                     <footer>
-                        <ul class="stats">
-                            <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Back</a></li>
+                        <ul class="actions">
+                            <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button">Terug naar home</a></li>
+                            <li><?php previous_post_link( '%link', '&larr; Vorige' ); ?></li>
+                            <li><?php next_post_link( '%link', 'Volgende &rarr;' ); ?></li>
                         </ul>
+
+                        <?php
+                        if ( comments_open() || get_comments_number() ) {
+                            comments_template();
+                        }
+                        ?>
                     </footer>
                 </article>
             <?php endwhile; endif; ?>
