@@ -85,3 +85,21 @@ if ( ! function_exists( 'simple_theme_create_demo_posts' ) ) {
     }
 }
 add_action( 'after_switch_theme', 'simple_theme_create_demo_posts' );
+
+/**
+ * Register widget area(s).
+ */
+if ( ! function_exists( 'simple_theme_widgets_init' ) ) {
+    function simple_theme_widgets_init() {
+        register_sidebar( array(
+            'name'          => __( 'Primary Sidebar', 'simple-wp-theme' ),
+            'id'            => 'sidebar-1',
+            'description'   => __( 'Main sidebar that appears on the right on posts and pages.', 'simple-wp-theme' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
+        ) );
+    }
+}
+add_action( 'widgets_init', 'simple_theme_widgets_init' );

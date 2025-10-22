@@ -29,52 +29,70 @@ get_header();
             </nav>
         </header>
 
-        <!-- Menu (leeg) -->
-        <section id="menu">
-            <section></section>
-            <section></section>
-            <section></section>
-        </section>
+        <!-- Main + Sidebar wrapper -->
+        <div id="main-and-sidebar" class="container">
+            <div id="main" role="main">
+                <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+                    <article class="post">
+                        <header>
+                            <div class="title">
+                                <h2><?php the_title(); ?></h2>
+                            </div>
+                            <div class="meta">
+                                <time class="published" datetime="<?php echo get_the_date( 'c' ); ?>"><?php echo get_the_date(); ?></time>
+                                <span class="author"><?php the_author(); ?></span>
+                            </div>
+                        </header>
 
-        <!-- Main -->
-        <div id="main">
-            <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-                <article class="post">
-                    <header>
-                        <div class="title">
-                            <h2><?php the_title(); ?></h2>
+                        <?php if ( has_post_thumbnail() ) : ?>
+                            <span class="image featured"><?php the_post_thumbnail( 'large' ); ?></span>
+                        <?php else : ?>
+                            <span class="image featured"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/pic01.jpg' ); ?>" alt="" /></span>
+                        <?php endif; ?>
+
+                        <div class="entry-content">
+                            <?php the_content(); ?>
                         </div>
-                        <div class="meta">
-                            <time class="published" datetime="<?php echo get_the_date( 'c' ); ?>"><?php echo get_the_date(); ?></time>
-                            <span class="author"><?php the_author(); ?></span>
-                        </div>
-                    </header>
 
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <span class="image featured"><?php the_post_thumbnail( 'large' ); ?></span>
-                    <?php else : ?>
-                        <span class="image featured"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/pic01.jpg' ); ?>" alt="" /></span>
-                    <?php endif; ?>
+                        <footer>
+                            <ul class="actions">
+                                <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button">Terug naar home</a></li>
+                                <li><?php previous_post_link( '%link', '&larr; Vorige' ); ?></li>
+                                <li><?php next_post_link( '%link', 'Volgende &rarr;' ); ?></li>
+                            </ul>
 
-                    <div class="entry-content">
-                        <?php the_content(); ?>
-                    </div>
+                            <?php
+                            if ( comments_open() || get_comments_number() ) {
+                                comments_template();
+                            }
+                            ?>
+                        </footer>
+                    </article>
+                <?php endwhile; endif; ?>
+            </div>
 
-                    <footer>
-                        <ul class="actions">
-                            <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button">Terug naar home</a></li>
-                            <li><?php previous_post_link( '%link', '&larr; Vorige' ); ?></li>
-                            <li><?php next_post_link( '%link', 'Volgende &rarr;' ); ?></li>
+            <!-- Sidebar -->
+            <aside id="sidebar" role="complementary">
+                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+                <?php else : ?>
+                    <section class="widget">
+                        <h3 class="widget-title">Zoek</h3>
+                        <?php get_search_form(); ?>
+                    </section>
+                    <section class="widget">
+                        <h3 class="widget-title">Recente berichten</h3>
+                        <ul>
+                            <?php
+                            $recent = wp_get_recent_posts( array( 'numberposts' => 5 ) );
+                            foreach ( $recent as $r ) {
+                                echo '<li><a href="' . get_permalink( $r['ID'] ) . '">' . esc_html( $r['post_title'] ) . '</a></li>';
+                            }
+                            ?>
                         </ul>
-
-                        <?php
-                        if ( comments_open() || get_comments_number() ) {
-                            comments_template();
-                        }
-                        ?>
-                    </footer>
-                </article>
-            <?php endwhile; endif; ?>
+                    </section>
+                <?php endif; ?>
+            </aside>
         </div>
 
         <!-- Footer -->
