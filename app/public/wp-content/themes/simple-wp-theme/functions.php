@@ -31,7 +31,7 @@ if ( ! function_exists( 'simple_theme_enqueue' ) ) {
             wp_enqueue_style( 'simple-style', get_stylesheet_uri(), array( 'simple-fontawesome' ), wp_get_theme()->get( 'Version' ) );
         }
 
-        // JavaScript (optioneel, volgorde zoals in je HTML)
+        // JavaScript
         $js_list = array( '/assets/js/jquery.min.js', '/assets/js/browser.min.js', '/assets/js/breakpoints.min.js', '/assets/js/util.js', '/assets/js/main.js' );
         foreach ( $js_list as $js ) {
             if ( file_exists( $dir_path . $js ) ) {
