@@ -46,6 +46,38 @@
 
         <!-- Main + Sidebar wrapper -->
         <div id="main-and-sidebar" class="container">
+            <!-- Sidebar (left) -->
+            <aside id="sidebar" role="complementary">
+                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+                <?php else : ?>
+                    <!-- Fallback widgets -->
+                    <section class="widget">
+                        <h3 class="widget-title">Zoek</h3>
+                        <?php get_search_form(); ?>
+                    </section>
+
+                    <section class="widget">
+                        <h3 class="widget-title">Categorieën</h3>
+                        <ul>
+                            <?php wp_list_categories( array( 'title_li' => '', 'number' => 10 ) ); ?>
+                        </ul>
+                    </section>
+
+                    <section class="widget">
+                        <h3 class="widget-title">Recente berichten</h3>
+                        <ul>
+                            <?php
+                            $recent = wp_get_recent_posts( array( 'numberposts' => 5 ) );
+                            foreach ( $recent as $r ) {
+                                echo '<li><a href="' . get_permalink( $r['ID'] ) . '">' . esc_html( $r['post_title'] ) . '</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </section>
+                <?php endif; ?>
+            </aside>
+
             <!-- Main -->
             <div id="main" role="main">
                 <!-- Posts list -->
@@ -115,38 +147,6 @@
                     <nav class="pagination"><?php the_posts_pagination(); ?></nav>
                 </section>
             </div>
-
-            <!-- Sidebar -->
-            <aside id="sidebar" role="complementary">
-                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
-                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
-                <?php else : ?>
-                    <!-- Fallback widgets -->
-                    <section class="widget">
-                        <h3 class="widget-title">Zoek</h3>
-                        <?php get_search_form(); ?>
-                    </section>
-
-                    <section class="widget">
-                        <h3 class="widget-title">Categorieën</h3>
-                        <ul>
-                            <?php wp_list_categories( array( 'title_li' => '', 'number' => 10 ) ); ?>
-                        </ul>
-                    </section>
-
-                    <section class="widget">
-                        <h3 class="widget-title">Recente berichten</h3>
-                        <ul>
-                            <?php
-                            $recent = wp_get_recent_posts( array( 'numberposts' => 5 ) );
-                            foreach ( $recent as $r ) {
-                                echo '<li><a href="' . get_permalink( $r['ID'] ) . '">' . esc_html( $r['post_title'] ) . '</a></li>';
-                            }
-                            ?>
-                        </ul>
-                    </section>
-                <?php endif; ?>
-            </aside>
         </div>
 
         <!-- Footer -->

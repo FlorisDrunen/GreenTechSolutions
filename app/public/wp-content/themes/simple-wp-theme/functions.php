@@ -87,6 +87,63 @@ if ( ! function_exists( 'simple_theme_create_demo_posts' ) ) {
 add_action( 'after_switch_theme', 'simple_theme_create_demo_posts' );
 
 /**
+ * Populate Primary Sidebar with default widgets if it's empty (runs once in admin).
+ */
+if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
+    function simple_theme_add_default_widgets() {
+        // Only run in the admin and when the current user can manage widgets
+        if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        // Avoid running more than once
+        if ( get_option( 'simple_theme_default_widgets_added' ) ) {
+            return;
+        }
+
+        $sidebars = get_option( 'sidebars_widgets', array() );
+        $sidebar_widgets = isset( $sidebars['sidebar-1'] ) ? $sidebars['sidebar-1'] : array();
+
+        if ( empty( $sidebar_widgets ) || ! is_array( $sidebar_widgets ) ) {
+            // Text widget
+            $text_widgets = get_option( 'widget_text', array() );
+            if ( ! is_array( $text_widgets ) ) {
+                $text_widgets = array( '_multiwidget' => 1 );
+            }
+            $text_widgets[] = array(
+                'title'  => 'Over ons',
+                'text'   => '<p>Welkom bij GreenTech Solutions — pas dit aan via Weergave → Widgets.</p>',
+                'filter' => false,
+            );
+            end( $text_widgets );
+            $text_id = key( $text_widgets );
+            update_option( 'widget_text', $text_widgets );
+
+            // Recent posts widget
+            $recent_widgets = get_option( 'widget_recent-posts', array() );
+            if ( ! is_array( $recent_widgets ) ) {
+                $recent_widgets = array( '_multiwidget' => 1 );
+            }
+            $recent_widgets[] = array(
+                'title'  => 'Recente berichten',
+                'number' => 5,
+            );
+            end( $recent_widgets );
+            $recent_id = key( $recent_widgets );
+            update_option( 'widget_recent-posts', $recent_widgets );
+
+            // Assign these widgets to sidebar-1
+            $sidebars['sidebar-1'] = array();
+            $sidebars['sidebar-1'][] = 'text-' . $text_id;
+            $sidebars['sidebar-1'][] = 'recent-posts-' . $recent_id;
+            update_option( 'sidebars_widgets', $sidebars );
+        }
+
+        update_option( 'simple_theme_default_widgets_added', 1 );
+    }
+}
+add_action( 'admin_init', 'simple_theme_add_default_widgets' );
+/**
  * Register widget area(s).
  */
 if ( ! function_exists( 'simple_theme_widgets_init' ) ) {

@@ -31,6 +31,29 @@ get_header();
 
         <!-- Main + Sidebar wrapper -->
         <div id="main-and-sidebar" class="container">
+            <!-- Sidebar (left) -->
+            <aside id="sidebar" role="complementary">
+                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+                <?php else : ?>
+                    <section class="widget">
+                        <h3 class="widget-title">Zoek</h3>
+                        <?php get_search_form(); ?>
+                    </section>
+                    <section class="widget">
+                        <h3 class="widget-title">Recente berichten</h3>
+                        <ul>
+                            <?php
+                            $recent = wp_get_recent_posts( array( 'numberposts' => 5 ) );
+                            foreach ( $recent as $r ) {
+                                echo '<li><a href="' . get_permalink( $r['ID'] ) . '">' . esc_html( $r['post_title'] ) . '</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </section>
+                <?php endif; ?>
+            </aside>
+
             <div id="main" role="main">
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                     <article class="post">
@@ -70,29 +93,6 @@ get_header();
                     </article>
                 <?php endwhile; endif; ?>
             </div>
-
-            <!-- Sidebar -->
-            <aside id="sidebar" role="complementary">
-                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
-                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
-                <?php else : ?>
-                    <section class="widget">
-                        <h3 class="widget-title">Zoek</h3>
-                        <?php get_search_form(); ?>
-                    </section>
-                    <section class="widget">
-                        <h3 class="widget-title">Recente berichten</h3>
-                        <ul>
-                            <?php
-                            $recent = wp_get_recent_posts( array( 'numberposts' => 5 ) );
-                            foreach ( $recent as $r ) {
-                                echo '<li><a href="' . get_permalink( $r['ID'] ) . '">' . esc_html( $r['post_title'] ) . '</a></li>';
-                            }
-                            ?>
-                        </ul>
-                    </section>
-                <?php endif; ?>
-            </aside>
         </div>
 
         <!-- Footer -->
