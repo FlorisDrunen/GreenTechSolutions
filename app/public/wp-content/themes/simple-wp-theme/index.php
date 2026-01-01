@@ -1,6 +1,5 @@
 <?php
 ?><!DOCTYPE HTML>
-<!-- Bestand: index.php - Toont de lijst met berichten. Laadt dynamische widgets uit 'Primary Sidebar' -->
 <html>
 <head>
     <meta charset="utf-8" />
@@ -38,7 +37,7 @@
             </nav>
         </header>
 
-        <!-- Menu: lege secties aanwezig om de layout van de originele HTML te behouden; pas aan indien gewenst -->
+        <!-- Menu (leeg – behoud structuur van HTML) -->
         <section id="menu">
             <section></section>
             <section></section>
@@ -48,17 +47,11 @@
         <!-- Main + Sidebar wrapper -->
         <div id="main-and-sidebar" class="container">
             <!-- Sidebar (left) -->
-            <!--
-                Sidebar uitleg:
-                - 'is_active_sidebar( "sidebar-1" )' controleert of er widgets zijn toegewezen in de admin.
-                - 'dynamic_sidebar( "sidebar-1" )' vertaalt de toegewezen widgets naar HTML en print het.
-                - Als er geen widgets zijn, tonen we fallback HTML hieronder.
-            -->
             <aside id="sidebar" role="complementary">
                 <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
                     <?php dynamic_sidebar( 'sidebar-1' ); ?>
                 <?php else : ?>
-                    <!-- Fallback widgets: getoond als er geen actieve widgets zijn toegewezen aan 'Primary Sidebar' -->
+                    <!-- Fallback widgets -->
                     <section class="widget">
                         <h3 class="widget-title">Zoek</h3>
                         <?php get_search_form(); ?>
@@ -87,15 +80,7 @@
 
             <!-- Main -->
             <div id="main" role="main">
-                <!-- Posts list: WordPress Loop -->
-                <!--
-                    De Loop (have_posts / the_post) haalt posts op vanuit de database.
-                    Belangrijke template-tags:
-                    - the_title(): toont de titel
-                    - the_excerpt(): toont een korte samenvatting
-                    - the_permalink(): link naar single post
-                    - the_post_thumbnail(): toont uitgelichte afbeelding
-                -->
+                <!-- Posts list -->
                 <section class="posts">
                     <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                         <article class="post">

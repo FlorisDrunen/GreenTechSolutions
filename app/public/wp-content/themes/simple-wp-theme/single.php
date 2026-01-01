@@ -9,13 +9,6 @@ get_header();
     <?php wp_head(); ?>
 </head>
 <body class="single is-preload">
-    <!-- Bestand: single.php - Toont één bericht met content en 'Primary Sidebar' aan de linkerkant -->
-    <!--
-        Opmerkingen:
-        - get_header() laadt header.php (hier niet los aanwezig; sommige thema's gebruiken dit).
-        - wp_head() is essentieel; plugins en WordPress voegen hier scripts en styles toe.
-        - single_post_title() toont de titel van het huidige bericht.
-    -->
 
     <!-- Wrapper -->
     <div id="wrapper">
@@ -62,7 +55,6 @@ get_header();
             </aside>
 
             <div id="main" role="main">
-                <!-- Single Loop: haalt het ene bericht op en toont volledige content -->
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                     <article class="post">
                         <header>
@@ -93,7 +85,6 @@ get_header();
                             </ul>
 
                             <?php
-                            // Reacties: als er reacties zijn of reacties open staan, laad het reactie-template
                             if ( comments_open() || get_comments_number() ) {
                                 comments_template();
                             }

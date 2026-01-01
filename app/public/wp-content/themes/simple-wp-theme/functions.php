@@ -1,22 +1,9 @@
 <?php
-/*
- * Bestand: functions.php
- * Doel: Registreert theme features, enqueue scripts/styles en registreert widgets.
- * Uitleg: Pas hier thema-functies aan (setup, assets, widgets). Voeg of verwijder functies
- * en houd veranderingen kort en gedocumenteerd zodat beheer via WP makkelijk blijft.
+/**
+ * Simple WP Theme - enqueue HTML Website assets
  */
 
 if ( ! function_exists( 'simple_theme_setup' ) ) {
-    /*
-     * simple_theme_setup()
-     * Wat: Initialiseert thema-ondersteuning en registreert menu-locaties.
-     * Waarom: Zet standaard features aan zodat WordPress en de customizer
-     * correct weten hoe ze dit thema moeten behandelen.
-     * Belangrijk:
-     *  - 'title-tag' laat WP het <title> element beheren.
-     *  - 'post-thumbnails' schakelt uitgelichte afbeeldingen in.
-     *  - register_nav_menus() registreert een menu-plek (hier: 'primary').
-     */
     function simple_theme_setup() {
         add_theme_support( 'title-tag' );
         add_theme_support( 'post-thumbnails' );
@@ -26,24 +13,16 @@ if ( ! function_exists( 'simple_theme_setup' ) ) {
 add_action( 'after_setup_theme', 'simple_theme_setup' );
 
 if ( ! function_exists( 'simple_theme_enqueue' ) ) {
-    /*
-     * simple_theme_enqueue()
-     * Wat: Voegt styles en scripts toe aan de frontend via wp_enqueue_* functies.
-     * Uitleg:
-     *  - get_template_directory_uri() geeft de URL van het thema (voor browser).
-     *  - get_template_directory() geeft het pad op de schijf (voor file_exists en filemtime).
-     *  - filemtime() gebruiken we als versie (cache-busting) zodat browsers updates ophalen.
-     */
     function simple_theme_enqueue() {
         $dir_uri  = get_template_directory_uri();
         $dir_path = get_template_directory();
 
-        /* Laad Font Awesome als het bestand aanwezig is */
+        // Font Awesome
         if ( file_exists( $dir_path . '/assets/css/fontawesome-all.min.css' ) ) {
             wp_enqueue_style( 'simple-fontawesome', $dir_uri . '/assets/css/fontawesome-all.min.css', array(), filemtime( $dir_path . '/assets/css/fontawesome-all.min.css' ) );
         }
 
-        /* Laad eerst gecompileerde CSS (assets/css/main.css). Als niet aanwezig, probeer assets/sass/main.css, anders style.css */
+        // Prefer compiled CSS: assets/css/main.css, anders assets/sass/main.css, anders style.css
         if ( file_exists( $dir_path . '/assets/css/main.css' ) ) {
             wp_enqueue_style( 'simple-main', $dir_uri . '/assets/css/main.css', array( 'simple-fontawesome' ), filemtime( $dir_path . '/assets/css/main.css' ) );
         } elseif ( file_exists( $dir_path . '/assets/sass/main.css' ) ) {
@@ -52,12 +31,7 @@ if ( ! function_exists( 'simple_theme_enqueue' ) ) {
             wp_enqueue_style( 'simple-style', get_stylesheet_uri(), array( 'simple-fontawesome' ), wp_get_theme()->get( 'Version' ) );
         }
 
-        /* JavaScript-bestanden om te enqueuen (worden alleen geladen als ze bestaan)
-         * Uitleg:
-         *  - We maken een veilige handle van de bestandsnaam (geen rare tekens).
-         *  - Als het bestand 'jquery' in de naam heeft, voeg dan geen dependency toe.
-         *  - wp_enqueue_script(..., true) laadt het script in de footer (aanbevolen).
-         */
+        // JavaScript
         $js_list = array( '/assets/js/jquery.min.js', '/assets/js/browser.min.js', '/assets/js/breakpoints.min.js', '/assets/js/util.js', '/assets/js/main.js' );
         foreach ( $js_list as $js ) {
             if ( file_exists( $dir_path . $js ) ) {
@@ -70,11 +44,8 @@ if ( ! function_exists( 'simple_theme_enqueue' ) ) {
 }
 add_action( 'wp_enqueue_scripts', 'simple_theme_enqueue' );
 
-/* Maak demo-berichten bij theme-activatie (alleen als er nog geen berichten zijn)
- * Uitleg:
- *  - Aangeroepen via 'after_switch_theme' hook (onderaan dit bestand).
- *  - Checkt eerst of er al gepubliceerde berichten zijn; zo voorkomen we duplicates.
- *  - wp_is_json_request() voorkomt dat deze functie wordt uitgevoerd bij REST-requests.
+/**
+ * Create demo posts when theme is activated (only if no posts exist).
  */
 if ( ! function_exists( 'simple_theme_create_demo_posts' ) ) {
     function simple_theme_create_demo_posts() {
@@ -84,8 +55,7 @@ if ( ! function_exists( 'simple_theme_create_demo_posts' ) ) {
 
         $counts = wp_count_posts( 'post' );
         if ( ! empty( $counts ) && intval( $counts->publish ) > 0 ) {
-            /* Er bestaan al posts */
-            return;
+            return; // posts already exist
         }
 
         $demo_posts = array(
@@ -116,21 +86,17 @@ if ( ! function_exists( 'simple_theme_create_demo_posts' ) ) {
 }
 add_action( 'after_switch_theme', 'simple_theme_create_demo_posts' );
 
-/* Voeg standaard-widgets toe aan 'Primary Sidebar' als deze leeg is (eenmalig, admin)
- * Uitleg en notities:
- *  - WordPress bewaart widgets in opties zoals 'widget_text' en 'widget_recent-posts'.
- *  - 'sidebars_widgets' is een array die per sidebar de lijst met widget-id's bewaart.
- *  - Deze functie maakt twee widget-instanties aan en voegt ze toe aan 'sidebar-1'.
- *  - We zetten een optie 'simple_theme_default_widgets_added' zodat dit maar één keer gebeurt.
+/**
+ * Populate Primary Sidebar with default widgets if it's empty (runs once in admin).
  */
 if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
     function simple_theme_add_default_widgets() {
-        /* Alleen uitvoeren in het beheerdersgedeelte en door gebruikers met rechten om widgets te beheren */
+        // Only run in the admin and when the current user can manage widgets
         if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
             return;
         }
 
-        /* Voorkom dat dit meerdere keren wordt uitgevoerd */
+        // Avoid running more than once
         if ( get_option( 'simple_theme_default_widgets_added' ) ) {
             return;
         }
@@ -139,7 +105,7 @@ if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
         $sidebar_widgets = isset( $sidebars['sidebar-1'] ) ? $sidebars['sidebar-1'] : array();
 
         if ( empty( $sidebar_widgets ) || ! is_array( $sidebar_widgets ) ) {
-            /* Voeg een tekst-widget toe met voorbeeldtekst */
+            // Text widget
             $text_widgets = get_option( 'widget_text', array() );
             if ( ! is_array( $text_widgets ) ) {
                 $text_widgets = array( '_multiwidget' => 1 );
@@ -153,7 +119,7 @@ if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
             $text_id = key( $text_widgets );
             update_option( 'widget_text', $text_widgets );
 
-            /* Voeg een Recent Posts-widget toe */
+            // Recent posts widget
             $recent_widgets = get_option( 'widget_recent-posts', array() );
             if ( ! is_array( $recent_widgets ) ) {
                 $recent_widgets = array( '_multiwidget' => 1 );
@@ -166,7 +132,7 @@ if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
             $recent_id = key( $recent_widgets );
             update_option( 'widget_recent-posts', $recent_widgets );
 
-            /* Wijs de aangemaakte widgets toe aan sidebar-1 */
+            // Assign these widgets to sidebar-1
             $sidebars['sidebar-1'] = array();
             $sidebars['sidebar-1'][] = 'text-' . $text_id;
             $sidebars['sidebar-1'][] = 'recent-posts-' . $recent_id;
@@ -177,11 +143,8 @@ if ( ! function_exists( 'simple_theme_add_default_widgets' ) ) {
     }
 }
 add_action( 'admin_init', 'simple_theme_add_default_widgets' );
-/* Registreer widgetgebieden (Primary Sidebar) voor het thema
- * Uitleg:
- *  - 'id' is de unieke identifier die we gebruiken in templates (hier: 'sidebar-1').
- *  - 'before_widget' / 'after_widget' en 'before_title' / 'after_title' bepalen de HTML rond widgets.
- *  - Pas deze waarden aan als je andere markup wilt gebruiken of meer CSS-classes wilt toevoegen.
+/**
+ * Register widget area(s).
  */
 if ( ! function_exists( 'simple_theme_widgets_init' ) ) {
     function simple_theme_widgets_init() {
